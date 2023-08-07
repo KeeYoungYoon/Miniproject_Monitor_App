@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insert API Info</title>
+</head>
+<body>
+    <h1>Insert API Info</h1>
+    <input type="text" id="api_name_input" placeholder="Enter API Name">
+    <input type="text" id="api_url_input" placeholder="Enter API URL">
+    <input type="text" id="api_header_input" placeholder="Enter API Header">
+    <input type="text" id="api_body_input" placeholder="Enter API Body">
+    <input type="text" id="api_desc_input" placeholder="Enter API Description">
+    <button onclick="insertAPI()">Insert API Info</button>
+    <br> <!-- New line -->
+    <input type="text" id="api_id_input" placeholder="Enter API ID for deletion">
+    <button onclick="deleteAPI()">Delete API</button>
+    <br> <!-- New line -->
+    <input type="text" id="update_api_id_input" placeholder="Enter API ID for update">
+    <input type="text" id="update_api_name_input" placeholder="Enter API Name">
+    <input type="text" id="update_api_url_input" placeholder="Enter API URL">
+    <input type="text" id="update_api_header_input" placeholder="Enter API Header">
+    <input type="text" id="update_api_body_input" placeholder="Enter API Body">
+    <input type="text" id="update_api_desc_input" placeholder="Enter API Description">
+    <button onclick="updateAPI()">Update API Info</button>
+    <br> <!-- New line -->
+    <button onclick="redirectToIndexPage()">Go to Index Page</button>
+    <script>
+        function redirectToIndexPage() {
+            window.location.href = '/'; // Redirect to the index.html page
+        }
+
+        function insertAPI() {
+            const api_name = document.getElementById('api_name_input').value;
+            const api_url = document.getElementById('api_url_input').value;
+            const api_header = document.getElementById('api_header_input').value;
+            const api_body = document.getElementById('api_body_input').value;
+            const api_desc = document.getElementById('api_desc_input').value;
+
+            if (!api_name || !api_url || !api_header || !api_body || !api_desc) {
+                alert('Please enter all required information.');
+                return;
+            }
+
+            const requestBody = {
+                'api_name': api_name,
+                'api_url': api_url,
+                'api_header': api_header,
+                'api_body': api_body,
+                'api_desc': api_desc
+            };
+
+            fetch('/insert_api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error('Error:', error));
+        }
+
+        function deleteAPI() {
+            const ID = document.getElementById('api_id_input').value;
+
+            if (!ID) {
+                alert('Please enter the ID to delete the API.');
+                return;
+            }
+
+            const requestBody = {
+                'ID': ID
+            };
+
+            fetch('/delete_api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error('Error:', error));
+        }
+
+        function updateAPI() {
+            const ID = document.getElementById('update_api_id_input').value;
+            const api_name = document.getElementById('update_api_name_input').value;
+            const api_url = document.getElementById('update_api_url_input').value;
+            const api_header = document.getElementById('update_api_header_input').value;
+            const api_body = document.getElementById('update_api_body_input').value;
+            const api_desc = document.getElementById('update_api_desc_input').value;
+
+            if (!ID || !api_name || !api_url || !api_header || !api_body || !api_desc) {
+                alert('Please enter all required information.');
+                return;
+            }
+
+            const requestBody = {
+                'ID': ID,
+                'api_name': api_name,
+                'api_url': api_url,
+                'api_header': api_header,
+                'api_body': api_body,
+                'api_desc': api_desc
+            };
+
+            fetch('/update_api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
