@@ -11,17 +11,22 @@ from slack_sdk.errors import SlackApiError
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 import certifi
 import ssl
-
+from config import (
+    DB_HOST, DB_USER, DB_PASSWORD, DB_NAME,
+    API_URL, HEADERS, DATA, SLACK_BOT_TOKEN, SLACK_USER_ID
+)
 
 
 
 app = Flask(__name__)
 
 # Database configuration
-DB_HOST = #'MariaDB host'
-DB_USER = #'MariaDB username'
-DB_PASSWORD = #'MariaDB password'
-DB_NAME = #'MariaDB database name'
+# DB_HOST = '150.28.66.44'  # Replace with your MariaDB host
+# # DB_HOST = '192.168.45.212'
+# # DB_HOST = '192.168.45.175' 
+# DB_USER = 'app'  # Replace with your MariaDB username
+# DB_PASSWORD = '1234'  # Replace with your MariaDB password
+# DB_NAME = 'APITEST'  # Replace with your MariaDB database name
 
 # Function to connect to the database
 def connect_db():
@@ -165,6 +170,7 @@ def make_api_request():
     apiBody = data.get('apiBody')
 
     if apiUrl and apiHeader and apiBody:
+        print('here here')
         print(apiUrl)
         print(apiHeader)
         print(apiBody)
@@ -173,21 +179,12 @@ def make_api_request():
 
             apiHeader_dict = json.loads(apiHeader)
 
-            API_URL = #'url'
-            HEADERS =#'headers'
-            data = 'data'
-
-            # response = requests.post(API_URL, headers=HEADERS, json=data, verify=False)
-
-            response = requests.post(API_URL, headers=HEADERS, json=data, verify=False)
+            response = requests.post(API_URL, headers=HEADERS, json=DATA, verify=False)
             
             print(response.status_code)
             print(response.content)
-
-            # response = requests.post(apiUrl, headers=apiHeader_dict, json=apiBody, verify=False)
-
-            # Check the status code of the response
             if response.status_code == 200:
+                send_slack_dm()
                 return response.json()
             else:
                 # If there was an error, return the error message
@@ -202,8 +199,8 @@ def make_api_request():
 
 
 
-SLACK_BOT_TOKEN = #'token'
-SLACK_USER_ID = #'user_id'
+# SLACK_BOT_TOKEN = 'xoxb-4034891630403-5701804134113-ugHCA9YSJH9QwVrYFR7S9siC'
+# SLACK_USER_ID = 'U045G0R5J85'
 
 @app.route('/send_slack_dm', methods=['POST'])
 def send_slack_dm():
@@ -222,7 +219,7 @@ def send_slack_dm():
         # client = WebClient(token=SLACK_BOT_TOKEN)
         
         response = client.chat_postMessage(channel=SLACK_USER_ID, text=message)
-        return {'message': 'Slack DM sent successfully'}
+        return {'message': 'API Request sent successfully'}
     except SlackApiError as e:
         return {'error': f'Slack API error: {e.response["error"]}'}, 500
 

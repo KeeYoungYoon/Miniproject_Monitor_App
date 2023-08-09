@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>API Information</title>
+
+
 </head>
 <body>
     <h1>API Information</h1>
@@ -46,6 +48,13 @@
                 // Send the API data to the server endpoint
                 fetch('/make_api_request', requestOptions)
                     .then(response => {
+                        if (response.ok) {
+
+                        sendSlackDM('ok');
+                        } else {
+                        sendSlackDM('no');
+                        return response.json();
+                        }
                         if (!response.ok) {
                             throw new Error(`API request failed with status code: ${response.status}`);
                         }
@@ -58,8 +67,17 @@
         }
 
 
-        function sendSlackDM() {
-            const message = "Hello, this is a test Slack DM!";
+        function sendSlackDM(message_type) {
+            // const message = "Hello, this is a test Slack DM!";
+            
+            let message;
+            if (message_type == 'ok') {
+                message = "Hello, this is a test Slack DM! The API request was successful.";
+            } else {
+                message = "Hello, this is a test Slack DM! The API request failed.";
+            }
+
+           
             const requestOptions = {
                 method: 'POST',
                 headers: {
@@ -80,7 +98,7 @@
         // Function to send the API request
         function sendAPIRequest(apiUrl, apiHeader, apiBody) {
         // Parse the JSON strings for apiHeader and apiBody
-        console.log(apiUrl, apiHeader, apiBody);
+        // console.log(apiUrl, apiHeader, apiBody);
         let headers;
         
         try {
@@ -143,9 +161,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    apiUrl: //'url',
-                    apiHeader: //'header',
-                    apiBody: //'body'
+                   
                 })
             })
             .then(response => {
