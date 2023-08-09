@@ -20,13 +20,6 @@ from config import (
 
 app = Flask(__name__)
 
-# Database configuration
-# DB_HOST = '150.28.66.44'  # Replace with your MariaDB host
-# # DB_HOST = '192.168.45.212'
-# # DB_HOST = '192.168.45.175' 
-# DB_USER = 'app'  # Replace with your MariaDB username
-# DB_PASSWORD = '1234'  # Replace with your MariaDB password
-# DB_NAME = 'APITEST'  # Replace with your MariaDB database name
 
 # Function to connect to the database
 def connect_db():
@@ -199,8 +192,6 @@ def make_api_request():
 
 
 
-# SLACK_BOT_TOKEN = 'xoxb-4034891630403-5701804134113-ugHCA9YSJH9QwVrYFR7S9siC'
-# SLACK_USER_ID = 'U045G0R5J85'
 
 @app.route('/send_slack_dm', methods=['POST'])
 def send_slack_dm():
