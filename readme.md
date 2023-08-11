@@ -19,17 +19,48 @@ Readme는 사람이 작성한 부분과 Copilot이 작성한 부분으로 이루
 
 
 
-
-
-
-
 ```
 ```
 Copilot good recommendation cases
 ```
 
-![import time](images_copilot/copilot_recomm_import_time.png)
+![import time](images_copilot/copilot_recomm_slack_cases1.png)
+![import time](images_copilot/copilot_recomm_slack_cases2.png)
+```
+하드코딩으로 구현 되어 있던 message를 변경하기 위한 추천 코드 제공
+```
 
+![import time](images_copilot/copilot_recomm_basic_redirect.png)
+
+```
+페이지 기본 구성에 도움 되는 기본적인 퍼튼 및 페이지 redirect 처리 제공
+위는 index 페이지에서 request 페이지로 이동뒤 다시 index 페이지로 이동하는 버튼 추천
+```
+
+![import time](images_copilot/copilot_recomm_database_get.png)
+
+```
+기본적인 DB CRUD 기능 제공 하는 버튼 및 function은 추천으로 제공(세부적인 디버깅은 필요했음)
+```
+
+```
+Copilot bad recommendation cases
+```
+
+![import time](images_copilot/copilot_bad_recomm_case_no_fetch.png)
+
+```
+fetch로 가져올수 없는 함수에 대한 추천
+Backend가 구성되어 있는 상태였기때문에 다음 api를 호출하도록 fetch 될줄 알았으나 그냥 2 붙인걸 추천
+```
+
+![import time](images_copilot/copilot_recomm_bad_readme.png)
+![import time](images_copilot/copilot_bad_recomm_script.png)
+
+```
+readme 작성시와 Front code 작성시에도 딱히 추천 내용 없는 경우에 루프 돌듯 나오는 경우가 있음
+추천이 아예 안나오는 경우도 있기 때문에 좀 다른케이스로 보임
+```
 
 
 ```
