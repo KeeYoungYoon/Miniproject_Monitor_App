@@ -159,6 +159,7 @@ def get_all_api_info():
 @app.route('/send_slack_dm', methods=['POST'])
 def send_slack_dm():
     data = request.get_json()
+    # api_url = data.get('api_url')
     message = data.get('message')
 
     ssl._create_default_https_context = ssl._create_unverified_context
