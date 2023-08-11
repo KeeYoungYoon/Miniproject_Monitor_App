@@ -27,7 +27,7 @@
     <br> <!-- New line -->
     <button onclick="redirectToIndexPage()">Go to Index Page</button>
     <button onclick="sendSlackDM()">Slack Push</button>
-    <button onclick="sendTestRequest()">Test Request</button>
+    <!-- <button onclick="sendTestRequest()">Test Request</button> -->
 
     <script>
         function redirectToIndexPage() {
@@ -72,9 +72,9 @@
             
             let message;
             if (message_type == 'ok') {
-                message = "Hello, this is a test Slack DM! The API request for " +apiUrl+ " was successful.";
+                message = "The API request for " +apiUrl+ " was successful.";
             } else {
-                message = "Hello, this is a test Slack DM! The API request for " +apiUrl+" failed.";
+                message = "The API request for " +apiUrl+" failed.";
             }
 
            
@@ -154,28 +154,28 @@
             .catch(error => console.error('Error:', error));
         }
 
-        function sendTestRequest() {
-            fetch('/make_test_api_request', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+        // function sendTestRequest() {
+        //     fetch('/make_test_api_request', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
                    
-                })
-            })
-            .then(response => {
-                if (response.ok) {
+        //         })
+        //     })
+        //     .then(response => {
+        //         if (response.ok) {
 
-                    sendSlackDM();
-                } else {
+        //             sendSlackDM();
+        //         } else {
 
-                    return response.json();
-                }
-            })
-            .then(data => alert('API Response: ' + JSON.stringify(data)))
-            .catch(error => console.error('Error:', error));
-        } 
+        //             return response.json();
+        //         }
+        //     })
+        //     .then(data => alert('API Response: ' + JSON.stringify(data)))
+        //     .catch(error => console.error('Error:', error));
+        // } 
 
         // Fetch API information on page load
         fetchAPIInfo();

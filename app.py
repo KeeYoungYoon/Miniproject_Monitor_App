@@ -6,12 +6,16 @@ from flask import Flask, render_template, request, jsonify
 import requests
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+import schedule
+import time
+
 
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 import certifi
 import ssl
 
 from request import request_bp
+# scheduled_api_request
 
 from config import (
     DB_HOST, DB_USER, DB_PASSWORD, DB_NAME,
@@ -179,33 +183,20 @@ def send_slack_dm():
         return {'error': f'Slack API error: {e.response["error"]}'}, 500
 
 
-@app.route('/make_test_api_request', methods=['POST'])
-def make_test_api_request():
-    data = request.get_json()
-    apiUrl = data.get('apiUrl')
-    apiHeader = data.get('apiHeader')
-    apiBody = data.get('apiBody')
-
-    if apiUrl and apiHeader and apiBody:
-        try:
-            apiHeader_dict = json.loads(apiHeader)
-            response = requests.post(apiUrl, headers=apiHeader_dict, json=apiBody, verify=False)
-
-            if response.status_code == 200:
-                # send_slack_dm()
-                return response.json()
-            else:
-                return {'error': f'API request failed with status code: {response.status_code}'}, response.status_code
-        except Exception as e:
-            return {'error': str(e)}, 500
-    else:
-        return {'message': 'Please provide all required API data'}, 400
-
 @app.route('/request')
 def request_page():
     return render_template('request.html')
 
 app.register_blueprint(request_bp, url_prefix='/request')
 
+# schedule.every().day.at("09:50").do(scheduled_api_request)
+
+def run_schedule():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
 if __name__ == '__main__':
+    # run_schedule()
     app.run(debug=True)
