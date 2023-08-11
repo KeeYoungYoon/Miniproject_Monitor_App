@@ -17,6 +17,10 @@
 Readme는 사람이 작성한 부분과 Copilot이 작성한 부분으로 이루어져 있고 Copilot이 작성한 Readme에는 수정이 필요합니다.
 추천 해주는 기능이 어느순간부터 중복되는 부분이 있습니다.
 
+![import time](images_copilot/copilot_recomm_import_time.png)
+
+
+
 Above written by Kee Young
 
 ```
