@@ -30,6 +30,11 @@ Copilot good recommendation cases
 하드코딩으로 구현 되어 있던 message를 변경하기 위한 추천 코드 제공
 ```
 
+![import time](images_copilot/copilot_recomm_database_info.png)
+```
+초기 구현을 위해서 DB정보 파악이 가능 추천 코드로 세팅 제공
+```
+
 ![import time](images_copilot/copilot_recomm_basic_redirect.png)
 
 ```
