@@ -38,6 +38,7 @@ def insert_api_info_page():
 
 @app.route('/insert_api', methods=['POST'])
 def insert_api():
+
     data = request.get_json()
     api_name = data.get('api_name')
     api_url = data.get('api_url')
@@ -53,6 +54,7 @@ def insert_api():
 
 @app.route('/delete_api', methods=['POST'])
 def delete_api():
+
     data = request.get_json()
     ID = data.get('ID')
 
@@ -64,6 +66,7 @@ def delete_api():
 
 @app.route('/update_api', methods=['POST'])
 def update_api():
+
     data = request.get_json()
     ID = data.get('ID')
     api_name = data.get('api_name')
@@ -81,6 +84,41 @@ def update_api():
 # Route to get all API information
 @app.route('/get_all_api_info')
 def get_all_api_info():
+    #Swagger annotation
+    """Get All API Info
+    ---
+    responses:
+        200:
+            description: List of API Info
+            schema:
+                id: API Info
+                properties:
+                    ID:
+                        type: integer
+                        description: The API ID
+                        default: 1
+                    API_NM:
+                        type: string
+                        description: The API Name
+                        default: API Name
+                    API_URL:
+                        type: string
+                        description: The API URL
+                        default: API URL
+                    API_HEADER:
+                        type: string
+                        description: The API Header
+                        default: API Header
+                    API_BODY:
+                        type: string
+                        description: The API Body
+                        default: API Body
+                    API_DESC:
+                        type: string
+                        description: The API Description
+                        default: API Description
+    """
+
 
     connection = connect_db()
     cursor = connection.cursor()
@@ -107,6 +145,7 @@ def get_all_api_info():
 
 @app.route('/send_slack_dm', methods=['POST'])
 def send_slack_dm():
+
     data = request.get_json()
     # api_url = data.get('api_url')
     message = data.get('message')
