@@ -66,11 +66,41 @@ def update_api_request_rslt_by_id(ID, request_rslt):
     print("updating db", ID, request_rslt)
     connection = connect_db()
     cursor = connection.cursor()
-
-    query = "UPDATE API_INFO SET REQUEST_RSLT = %s, REQUEST_DTM = now() WHERE ID = %s"
+    if(request_rslt == "Y"):
+         query = "UPDATE API_INFO SET REQUEST_RSLT = %s, REQUEST_DTM = now(), LAST_SUCS_REQ_DTM = now() WHERE ID = %s"
+    else:
+         query = "UPDATE API_INFO SET REQUEST_RSLT = %s, REQUEST_DTM = now() WHERE ID = %s"
+    
     
     cursor.execute(query, (request_rslt, ID))
     connection.commit()
 
     connection.close()
+
+#Function to get all API information
+def get_all_api_info():
+    connection = connect_db()
+    cursor = connection.cursor()
+
+    query = "SELECT ID, API_NM, API_URL, API_HEADER, API_BODY, API_DESC, REQUEST_RSLT,REQUEST_DTM,LAST_SUCS_REQ_DTM FROM API_INFO"
+    cursor.execute(query)
+    result = cursor.fetchall()
+
+    connection.close()
+
+    api_info_list = []
+    for row in result:
+        api_info_list.append({
+            'ID': row[0],
+            'API_NM': row[1],
+            'API_URL': row[2],
+            'API_HEADER': row[3],
+            'API_BODY': row[4],
+            'API_DESC': row[5],
+            'REQUEST_RSLT': row[6],
+            'REQUEST_DTM': row[7],
+            'LAST_SUCS_REQ_DTM': row[8]
+        })
+
+    return api_info_list
 

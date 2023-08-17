@@ -16,7 +16,8 @@ import certifi
 import ssl
 
 from request import request_bp
-from database import connect_db, get_api_info_by_id, insert_api_info, delete_api_by_id,update_api_by_id
+from database import connect_db, get_api_info_by_id, insert_api_info, delete_api_by_id,update_api_by_id,get_all_api_info
+
 
 from config import (
     # DB_HOST, DB_USER, DB_PASSWORD, DB_NAME,API_URL, HEADERS, DATA, 
@@ -85,6 +86,21 @@ def insert_api():
 
 @app.route('/delete_api', methods=['POST'])
 def delete_api():
+    #swagger annotation
+    """Delete API Info
+    ---
+    parameters:
+        - name: ID
+          in: formData
+          type: integer
+          required: true
+    responses:
+        200:
+            description: API Info deleted successfully
+        400:
+            description: Please provide the ID to delete the API.
+    """
+
 
     data = request.get_json()
     ID = data.get('ID')
@@ -97,6 +113,41 @@ def delete_api():
 
 @app.route('/update_api', methods=['POST'])
 def update_api():
+    #swagger annotation
+    """Update API Info
+    ---
+    parameters:
+        - name: ID
+          in: formData
+          type: integer
+          required: true
+        - name: api_name
+          in: formData
+          type: string
+          required: true
+        - name: api_url
+          in: formData
+          type: string
+          required: true
+        - name: api_header
+          in: formData
+          type: string
+          required: true
+        - name: api_body
+          in: formData
+          type: string
+          required: true
+        - name: api_desc
+          in: formData
+          type: string
+          required: true
+    responses:
+        200:
+            description: API Info updated successfully
+        400:
+            description: Please provide all required information.
+    """
+
 
     data = request.get_json()
     ID = data.get('ID')
@@ -154,7 +205,7 @@ def get_all_api_info():
     connection = connect_db()
     cursor = connection.cursor()
 
-    query = "SELECT ID, API_NM, API_URL, API_HEADER, API_BODY, API_DESC, REQUEST_RSLT,REQUEST_DTM FROM API_INFO"
+    query = "SELECT ID, API_NM, API_URL, API_HEADER, API_BODY, API_DESC, REQUEST_RSLT,REQUEST_DTM,LAST_SUCS_REQ_DTM FROM API_INFO"
     cursor.execute(query)
     result = cursor.fetchall()
 
@@ -171,6 +222,7 @@ def get_all_api_info():
             'API_DESC': row[5],
             'REQUEST_RSLT': row[6],
             'REQUEST_DTM': row[7],
+            'LAST_SUCS_REQ_DTM': row[8],
         })
 
     return jsonify(api_info_list), 200
@@ -178,6 +230,23 @@ def get_all_api_info():
 
 @app.route('/send_slack_dm', methods=['POST'])
 def send_slack_dm():
+    #swagger annotation
+    """Send Slack DM
+    ---
+    parameters:
+        - name: message
+          in: formData
+          type: string
+          required: true
+    responses:
+        200:
+            description: API Request sent successfully
+        400:
+            description: Please provide the message to send
+        500:
+            description: Slack API error
+    """
+
 
     data = request.get_json()
     # api_url = data.get('api_url')
@@ -206,12 +275,19 @@ def request_page():
 
 app.register_blueprint(request_bp, url_prefix='/request')
 
-# schedule.every().day.at("09:50").do(scheduled_api_request)
 
-def run_schedule():
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+
+# def scheduled_api_request():
+#     print("scheduled_api_request")
+#     api_info_list = []
+#     api_info_list=get_all_api_info()
+#     print(api_info_list)
+# schedule.every().day.at("19:42").do(scheduled_api_request)
+
+# def run_schedule():
+#     while True:
+#         schedule.run_pending()
+#         time.sleep(1)
 
 
 if __name__ == '__main__':

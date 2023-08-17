@@ -103,7 +103,10 @@
 												<th>API Description</th>
 												<th>Request Result</th>
 												<th>Request Time</th>
+												<th>Last Successful Request</th>>
 												<th>Request</th>
+												
+
 											</tr>
 										</thead>
 										<tbody>
@@ -304,6 +307,8 @@
                     newRow.insertCell().innerText = apiInfo.API_DESC;
 					newRow.insertCell().innerText = apiInfo.REQUEST_RSLT;
 					newRow.insertCell().innerText = apiInfo.REQUEST_DTM;
+					newRow.insertCell().innerText = apiInfo.LAST_SUCS_REQ_DTM;
+					
                     const requestButtonCell = newRow.insertCell();
                     requestButtonCell.appendChild(createRequestButton(apiInfo.ID,apiInfo.API_URL, apiInfo.API_HEADER, apiInfo.API_BODY));
                 });
