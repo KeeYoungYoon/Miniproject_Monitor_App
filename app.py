@@ -154,7 +154,7 @@ def get_all_api_info():
     connection = connect_db()
     cursor = connection.cursor()
 
-    query = "SELECT ID, API_NM, API_URL, API_HEADER, API_BODY, API_DESC FROM API_INFO"
+    query = "SELECT ID, API_NM, API_URL, API_HEADER, API_BODY, API_DESC, REQUEST_RSLT,REQUEST_DTM FROM API_INFO"
     cursor.execute(query)
     result = cursor.fetchall()
 
@@ -169,6 +169,8 @@ def get_all_api_info():
             'API_HEADER': row[3],
             'API_BODY': row[4],
             'API_DESC': row[5],
+            'REQUEST_RSLT': row[6],
+            'REQUEST_DTM': row[7],
         })
 
     return jsonify(api_info_list), 200

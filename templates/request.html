@@ -98,9 +98,11 @@
 												<th>ID</th>
 												<th>API Name</th>
 												<th>API URL</th>
-												<th>API Header</th>
-												<th>API Body</th>
+												<!-- <th>API Header</th> -->
+												<!-- <th>API Body</th> -->
 												<th>API Description</th>
+												<th>Request Result</th>
+												<th>Request Time</th>
 												<th>Request</th>
 											</tr>
 										</thead>
@@ -188,14 +190,14 @@
         // }
 
         // Function to create a button for each row
-        function createRequestButton(apiUrl, apiHeader, apiBody) {
+        function createRequestButton(apiId,apiUrl, apiHeader, apiBody) {
             const button = document.createElement('button');
             button.innerText = 'Request';
             button.onclick = function() {
                 const requestOptions = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ apiUrl, apiHeader, apiBody })
+                    body: JSON.stringify({ apiId,apiUrl, apiHeader, apiBody })
                 };
 
                 // Send the API data to the server endpoint
@@ -297,11 +299,13 @@
                     newRow.insertCell().innerText = apiInfo.ID;
                     newRow.insertCell().innerText = apiInfo.API_NM;
                     newRow.insertCell().innerText = apiInfo.API_URL;
-                    newRow.insertCell().innerText = apiInfo.API_HEADER;
-                    newRow.insertCell().innerText = apiInfo.API_BODY;
+                    // newRow.insertCell().innerText = apiInfo.API_HEADER;
+                    // newRow.insertCell().innerText = apiInfo.API_BODY;
                     newRow.insertCell().innerText = apiInfo.API_DESC;
+					newRow.insertCell().innerText = apiInfo.REQUEST_RSLT;
+					newRow.insertCell().innerText = apiInfo.REQUEST_DTM;
                     const requestButtonCell = newRow.insertCell();
-                    requestButtonCell.appendChild(createRequestButton(apiInfo.API_URL, apiInfo.API_HEADER, apiInfo.API_BODY));
+                    requestButtonCell.appendChild(createRequestButton(apiInfo.ID,apiInfo.API_URL, apiInfo.API_HEADER, apiInfo.API_BODY));
                 });
             })
             .catch(error => console.error('Error:', error));

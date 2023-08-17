@@ -61,3 +61,16 @@ def update_api_by_id(ID, api_name, api_url, api_header, api_body, api_desc):
 
     connection.close()
 
+# Function to update REQUEST_RSLT, REQUEST_DTM by ID, REQUEST_DTM should be current time
+def update_api_request_rslt_by_id(ID, request_rslt):
+    print("updating db", ID, request_rslt)
+    connection = connect_db()
+    cursor = connection.cursor()
+
+    query = "UPDATE API_INFO SET REQUEST_RSLT = %s, REQUEST_DTM = now() WHERE ID = %s"
+    
+    cursor.execute(query, (request_rslt, ID))
+    connection.commit()
+
+    connection.close()
+
