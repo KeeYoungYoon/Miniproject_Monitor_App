@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS styling -->
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            color: #000000;
+            text-align: center;
+        }
+
+        button {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: auto;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+    </style>
+
+    <!-- Title of the page -->
+    <title>API Information</title>
+</head>
+
+<!-- Body of the page -->
+//add design elements in the body of the page
+
+<body>
+    <h1>API Information</h1>
+    <table id="apiTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>API Name</th>
+                <th>API URL</th>
+                <th>API Header</th>
+                <th>API Body</th>
+                <th>API Description</th>
+                <th>Request</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here -->
+        </tbody>
+    </table>
+
+    <br> <!-- New line -->
+    <button onclick="redirectToIndexPage()">Go to Index Page</button>
+    <button onclick="sendSlackDM()">Slack Push</button>
+    <!-- <button onclick="sendTestRequest()">Test Request</button> -->
+
+    <script>
+        function redirectToIndexPage() {
+            window.location.href = '/'; // Redirect to the index.html page
+        }
+
+        // Function to create a button for each row
+        function createRequestButton(apiUrl, apiHeader, apiBody) {
+            const button = document.createElement('button');
+            button.innerText = 'Request';
+            button.onclick = function() {
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ apiUrl, apiHeader, apiBody })
+                };
+
+                // Send the API data to the server endpoint
+                fetch('/request/make_api_request', requestOptions)
+                    .then(response => {
+                        if (response.ok) {
+
+                        sendSlackDM(apiUrl, 'ok');
+                        } else {
+                        sendSlackDM(apiUrl, 'error');
+                        return response.json();
+                        }
+                        if (!response.ok) {
+                            throw new Error(`API request failed with status code: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => alert('API Response: ' + JSON.stringify(data)))
+                    .catch(error => console.error('Error:', error));
+            };
+            return button;
+        }
+
+
+        function sendSlackDM(apiUrl ,message_type) {
+            // const message = "Hello, this is a test Slack DM!";
+            
+            let message;
+            if (message_type == 'ok') {
+                message = "The API request for " +apiUrl+ " was successful.";
+            } else {
+                message = "The API request for " +apiUrl+" failed.";
+            }
+
+           
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message , apiUrl: apiUrl})
+            };
+
+            fetch('/send_slack_dm', requestOptions)
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error('Error:', error));
+        }
+
+
+
+
+        // Function to send the API request
+        function sendAPIRequest(apiUrl, apiHeader, apiBody) {
+        // Parse the JSON strings for apiHeader and apiBody
+        // console.log(apiUrl, apiHeader, apiBody);
+        let headers;
+        
+        try {
+            headers = JSON.parse(apiHeader);
+        } catch (error) {
+            console.error('Error parsing API Header:', error);
+            alert('Error parsing API Header. Please check the input.');
+            return;
+        }
+
+        let body;
+        try {
+            body = JSON.parse(apiBody);
+        } catch (error) {
+            console.error('Error parsing API Body:', error);
+            alert('Error parsing API Body. Please check the input.');
+            return;
+        }
+
+        // Prepare the request options
+        const requestOptions = {
+            method: 'POST', // Or 'GET', 'PUT', 'DELETE' based on your API
+            headers: headers,
+            body: JSON.stringify(body)
+        };
+
+        // Send the API request
+        fetch(apiUrl, requestOptions)
+            .then(response => response.json())
+            .then(data => alert('API Response: ' + JSON.stringify(data)))
+            .catch(error => console.error('Error:', error));
+    }
+
+        // Function to fetch API information and populate the table
+        function fetchAPIInfo() {
+            fetch('/get_all_api_info')
+            .then(response => response.json())
+            .then(apiInfoList => {
+                const tableBody = document.getElementById('apiTable').getElementsByTagName('tbody')[0];
+                tableBody.innerHTML = ''; // Clear existing rows
+                apiInfoList.forEach(apiInfo => {
+                    const newRow = tableBody.insertRow();
+                    newRow.insertCell().innerText = apiInfo.ID;
+                    newRow.insertCell().innerText = apiInfo.API_NM;
+                    newRow.insertCell().innerText = apiInfo.API_URL;
+                    newRow.insertCell().innerText = apiInfo.API_HEADER;
+                    newRow.insertCell().innerText = apiInfo.API_BODY;
+                    newRow.insertCell().innerText = apiInfo.API_DESC;
+                    const requestButtonCell = newRow.insertCell();
+                    requestButtonCell.appendChild(createRequestButton(apiInfo.API_URL, apiInfo.API_HEADER, apiInfo.API_BODY));
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // function sendTestRequest() {
+        //     fetch('/make_test_api_request', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+                   
+        //         })
+        //     })
+        //     .then(response => {
+        //         if (response.ok) {
+
+        //             sendSlackDM();
+        //         } else {
+
+        //             return response.json();
+        //         }
+        //     })
+        //     .then(data => alert('API Response: ' + JSON.stringify(data)))
+        //     .catch(error => console.error('Error:', error));
+        // } 
+
+        // Fetch API information on page load
+        fetchAPIInfo();
+    </script>
+</body>
+</html>

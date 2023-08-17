@@ -30,11 +30,11 @@ Swagger(app)
 
 @app.route('/')
 def index():
-    return render_template('index_new.html')
+    return render_template('index.html')
 
 @app.route('/insert_api_info')
 def insert_api_info_page():
-    return render_template('insert_api_info_new.html')
+    return render_template('insert_api_info.html')
 
 @app.route('/insert_api', methods=['POST'])
 def insert_api():
@@ -200,7 +200,7 @@ def send_slack_dm():
 
 @app.route('/request')
 def request_page():
-    return render_template('request_new.html')
+    return render_template('request.html')
 
 app.register_blueprint(request_bp, url_prefix='/request')
 

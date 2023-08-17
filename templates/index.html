@@ -1,91 +1,166 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
 <head>
-    <!--give me design suggestions i want the page to have a title and header on the top I want the header to have buttons that will redirect to Inder_api_info.html and 
-    request.html-->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>T다이렉트샵 API 점검</title>
+	<link rel="stylesheet" href="./static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./static/assets/css/font-awesome.min.css">
+	<link rel="stylesheet" href="./static/assets/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="./static/assets/css/modal-video.min.css">
+	<link rel="stylesheet" href="./static/assets/css/animate.css">
+	<link rel="stylesheet" href="./static/assets/css/normalize.css">
+	<link rel="stylesheet" href="./static/assets/css/style.css">
+	<link rel="stylesheet" href="./static/assets/css/responsive.css">
 
-   
-
-
-    
-    <!-- <style>
-        body {
-            background-color: #f2f2f2;
-        }
-
-        h1 {
-            color: #000000;
-            text-align: center;
-        }
-
-        button {
-            background-color: #000000;
-            color: #ffffff;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: auto;
-        }
-
-        button:hover {
-            opacity: 0.8;
-        }
-
-        .container {
-            padding: 16px;
-        }
-
-        input[type=text] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            box-sizing: border-box;
-        }
-
-        
-    </style> -->
-
-    
-    <title>API Information</title>
-    <title>API Request Button</title>
-
-    
-
+	<script src="./static/assets/js/jquery.3.2.1.min.js"></script>
 
 </head>
+
 <body>
 
-    <!--
-        add styles to this page
-    -->
+	<!-- Start Header area
+======================================-->
+	<div class="header-area">
+		<div class="container">
+			<div class="header-top">
+				<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+					<!-- <a class="navbar-brand" href="#" onclick="index()"><img src="./static/assets/img/logo.png" alt="" class="logo"></a> -->
+					<!-- <a class="navbar-brand" href="index.html"><img src="./static/assets/img/logo.png" alt="" class="logo"></a> -->
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+					<div class="collapse navbar-collapse my-2 my-lg-0" id="navbarSupportedContent">
+						<div class="mainmenu">
+							<ul class="navbar-nav ml-auto">
+								<li class="nav-item active">
+									<a class="nav-link" href="#" onclick="index()">Home <span class="sr-only">(current)</span></a>
+								</li>							
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">API 점검</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<a class="dropdown-item" href="#" onclick="insert_api_info()">API 등록</a>
+										<a class="dropdown-item" href="#" onclick="redirectToRequestPage()">API 조회</a>
+									</div>
+								</li>
+								<li class="getstart"><a class="active" href="#" onclick="alert('준비중입니다.')">get started</a></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<!--End of nav bar-->
+			</div>
+			<!--End of header top-->
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="hero-text-wrapper">
+						<div class="hero-text-inner">
+							<div class="hero-text">
+								<h6>T다이렉트샵</h6>
+								<h1>API 점검 Tool</h1>
+								<p>In/Out-bound API Health Monitoring </p>
+								<a href="#" onclick="alert('준비중입니다.')" class="btn btn-primary">get started</a>
+								<!-- <a href="#" class="btn btn-light">EXPLORE FEATURES</a> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--End of row-->
+		</div>
+		<!--End of Container-->
+		<a href="#section1" class="scrl-down scroll-down"><i class="fa fa-long-arrow-down"></i></a>
+	</div>
+	<!--End of header area-->
 
 
-    <h1>API Information</h1>
-    
-    <div class="container">
-        <button onclick="redirectToInsertPage()">Insert API Info</button>
-        <button onclick="redirectToRequestPage()">Request API Info</button>
-    </div>
+
+	<!-- Why Choose us
+======================================-->
+	<div id="section1" class="choose-us">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7">
+					<img src="./static/assets/img/choose-us.jpg" alt="" class="choose-img img-fluid">
+				</div>
+				<div class="col-lg-5 ">
+					<div class="choose-wrapper">
+						<div class="choose-inner">
+							<div class="choose-text">
+								<h6>T다이렉트샵</h6>
+								<h1>All your data collected in one place</h1>
+								<p>T다이렉트샵과 연동하는 외부 API의 상태를 모니터링 할 수 있습니다.  </br>
+									</br> In/Out-bound API를 신규로 등록하거나 업데이트할 수 있습니다.  </p>
+								<a href="#" class="btn btn-light" onclick="insert_api_info()">API 등록</a>
+								<a href="#" class="btn btn-light" onclick="redirectToRequestPage()">API 조회</a>
+							</div>
+							<!--End of choose text-->
+						</div>
+						<!--End of choose inner-->
+					</div>
+					<!--End of choose wrapper-->
+				</div>
+			</div>
+			<!--End of row-->
+		</div>
+		<!--End of container-->
+		<!-- <a href="#section2" class="scrl-down scroll-down choose-scroll-down"><i class="fa fa-long-arrow-down"></i></a> -->
+	</div>
+	<!--End of choose us-->
 
 
-    <!-- <button onclick="redirectToInsertPage()">Insert API Info</button>
 
-    <br> 
-    <button onclick="redirectToRequestPage()">Go to Request Page</button> -->
+
+
+	<!-- Footer Area
+======================================-->
+	<div class="footer-menu">
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-8 text-left">
+					<div class="copyright">
+						<p>© 2023 SK주식회사 Digital채널사업팀 COPYRIGHT (C) BY SK INC. ALL RIGHT RESERVED. </p>
+					</div>
+				</div>
+				<div class="col-lg-4 text-right">
+					<div class="social-icon">
+						<a href="#"><i class="fa fa-facebook"></i></a>
+						<a href="#"><i class="fa fa-twitter"></i></a>
+						<a href="#"><i class="fa fa-google-plus"></i></a>
+						<a href="#"><i class="fa fa-instagram"></i></a>
+					</div>
+				</div>
+			</div>
+			<!--End of row-->
+		</div>
+		<!--End of container fluid-->
+		<a href="#" class="back-to-top"><i class="fa fa-long-arrow-up"></i></a>
+	</div>
+	<!--End of Footer Menu-->
+
+
+	<script src="./static/assets/js/popper.min.js"></script>
+	<script src="./static/assets/js/bootstrap.min.js"></script>
+	<script src="./static/assets/js/owl.carousel.min.js"></script>
+	<script src="./static/assets/js/modal-video.js"></script>
+	<script src="./static/assets/js/main.js"></script>
 
     <script>
-        function redirectToInsertPage() {
-            window.location.href = '/insert_api_info'; // Redirect to the insert_api_info.html page
+        function index() {
+            window.location.href = '/'; // Redirect to the index.html page
         }
-
         function redirectToRequestPage() {
             window.location.href = '/request'; // Redirect to the request.html page
         }
+		function insert_api_info() {
+            window.location.href = '/insert_api_info'; // Redirect to the request.html page
+        }
     </script>
+
 </body>
+
 </html>
