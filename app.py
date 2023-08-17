@@ -30,14 +30,45 @@ Swagger(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index_new.html')
 
 @app.route('/insert_api_info')
 def insert_api_info_page():
-    return render_template('insert_api_info.html')
+    return render_template('insert_api_info_new.html')
 
 @app.route('/insert_api', methods=['POST'])
 def insert_api():
+    # Swagger annotations
+
+    """Insert API Info
+    ---
+    parameters:
+        - name: api_name
+          in: formData
+          type: string
+          required: true
+        - name: api_url
+          in: formData
+          type: string
+          required: true
+        - name: api_header 
+          in: formData
+          type: string
+          required: true
+        - name: api_body
+          in: formData
+          type: string
+          required: true
+        - name: api_desc
+          in: formData
+          type: string
+          required: true
+    responses:
+        200:
+            description: API Info inserted successfully
+        400:
+            description: Please provide all required information.
+    """
 
     data = request.get_json()
     api_name = data.get('api_name')
@@ -169,7 +200,7 @@ def send_slack_dm():
 
 @app.route('/request')
 def request_page():
-    return render_template('request.html')
+    return render_template('request_new.html')
 
 app.register_blueprint(request_bp, url_prefix='/request')
 
