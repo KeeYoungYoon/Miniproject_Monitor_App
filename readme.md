@@ -48,6 +48,12 @@ Copilot good recommendation cases
 기본적인 DB CRUD 기능 제공 하는 버튼 및 function은 추천으로 제공(세부적인 디버깅은 필요했음)
 ```
 
+![import time](images_copilot/copilot_recomm_database_crud.png)
+
+```
+DB CRUD 추가하는데에는 확실히 위처럼 도움되는것 확인 했음
+```
+
 ```
 Copilot bad recommendation cases
 ```
@@ -67,6 +73,12 @@ readme 작성시와 Front code 작성시에도 딱히 추천 내용 없는 경�
 추천이 아예 안나오는 경우도 있기 때문에 좀 다른케이스로 보임
 ```
 
+![import time](images_copilot/copilot_bad_recomm_annotation.png)
+![import time](images_copilot/copilot_bad_recomm_annotation_indentataion.png)
+
+```
+Swagger Annotation 작성시 전체적으로 추천은 되나 annotation 자체가 주석의 형태로 작성 되다 보니 syntax 오류를 잡지 못함
+```
 
 ```
 Above written by Kee Young
