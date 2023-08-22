@@ -27,8 +27,8 @@ def make_api_request():
         try:
             apiHeader_dict = json.loads(apiHeader)
 
-            # response = requests.post(apiUrl, headers=apiHeader_dict, json=apiBody, verify=False)
-            response = requests.get(apiUrl, headers=apiHeader_dict, verify=False)
+            response = requests.post(apiUrl, headers=apiHeader_dict, json=apiBody, verify=False)
+            # response = requests.get(apiUrl, headers=apiHeader_dict, verify=False)
             print(response.status_code)
             print(response.content)
 
